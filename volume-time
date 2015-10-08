@@ -1,0 +1,37 @@
+'''
+This python file plot the figure of volume changes with time by LAMMPS output file
+Written by Jianqiu Wang @ 10/05/2015
+'''
+import plotly.plotly as plt
+from plotly.graph_objs import Scatter
+import fileinput
+f = open('in.minimize.out','r')  #open file, read only
+'''Step 1: read all the time and volume data
+   1.1 find the data start line
+   1.2 split the string, only save the first and last element(time and volume)
+   1.3 save time and volume into two lists and convert them into numbers
+'''
+line = f.readline #f.readline() # read each line of content
+
+for i, line in enumerate(f):
+    if line == 'Step Temp E_pair E_mol TotEng Press Volume \n':
+        # print line.split()
+        j = i  # j is the line number
+f = open('in.minimize.out','r')
+# print j
+time = []
+volume = []
+for k, line in enumerate(f):
+    if k > j:
+        time.append(line[2:8])
+        volume.append(line[77:86])
+f.close()
+time = map(float, time)
+volume = map(float, volume)
+
+'''Step 2: plot the figure
+   Use plotpl library
+’’’
+trace0 = Scatter(x=time,y=volume)
+data = [trace0]
+unique_url = plt.plot(data, filename = 'volume-time')
