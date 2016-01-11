@@ -27,6 +27,6 @@ def getBox(f):
     return box
     # print box
     
-getBox('in.chloroform.conc.15.out')
+# getBox('in.chloroform.conc.15.out')
 
 
